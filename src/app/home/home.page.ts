@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  public listaPokemons=[ //se exite um [](array), só tem como exibir TODOS OS DADOS usando FOR (ngFoR)
+  public listaPokemons=[ //se exite um [](array), só tem como exibir TODOS OS DADOS usando FOR (ngFoR) - funcionando como um BD
     {
       numero:'001',
       nome:'Bulbasaur', 
@@ -30,6 +30,32 @@ export class HomePage {
   ];
   public listaFiltrada=[];
 
-  constructor() {}
+  constructor() {
+    this.resetarLista();
+  }
+
+  private resetarLista(){
+    this.listaFiltrada = this.listaPokemons;
+  }
+
+  public buscarPokemon(evento: any){
+    let busca = evento.target.value;
+
+    this.resetarLista();
+
+    if(busca && busca.trim() != ''){
+      this.listaFiltrada = this.listaFiltrada.filter(dados => {
+        if (dados.nome.toLowerCase().indexOf(busca.toLowerCase()) > -1) {
+          return true;
+        }
+        else if(dados.numero.indexOf(busca) > -1){
+          return true; 
+        }
+        return false;
+      });
+    }
+    
+  }
+
 
 }
