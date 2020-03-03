@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DadosService } from '../servicos/dados.service';
 import { Router } from '@angular/router';
 import { IPokemon } from '../interfaces/IPokemon';
+import { PokemonApiService } from '../servicos/pokemon-api.service';
 
 
 
@@ -30,13 +31,27 @@ export class HomePage {
     {numero: '133', nome: 'Eevee', tipos: ['Normal'], img: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png'},
     {numero: '151', nome: 'Mew', tipos: ['Psychic'], img: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/151.png'}
 
-
-
   ];
   public listaFiltrada=[];
 
-  constructor(public dadosService: DadosService, public router: Router) {
+  public listaPokemonApi;
+  public totalPokemons;
+  public offset = 0;
+  public limit = 10;
+
+  constructor(public dadosService: DadosService, public router: Router, public pokeApi: PokemonApiService) {
     this.resetarLista();
+    this.buscarPokemons(this.offset,this.limit);
+  }
+
+  public buscarPokemons(offset, limit){
+    this.pokeApi.buscaPokemons(offset, limit).subscribe(dados=>{
+      console.log(dados);
+      //pega somente o total de pokemons
+      this.totalPokemons = dados['count'];
+      //pega somente a lista de pokemons
+      this.listaPokemonApi=dados['results'];
+    })
   }
 
   abrirDadosPokemon(pokemon: IPokemon){ 
