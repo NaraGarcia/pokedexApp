@@ -37,7 +37,7 @@ export class DadosService {
       this.dados = null;
       this.dados = [];
     } else if (nome.trim() !== '') {
-      const index = this.dados.indexOf(nome);   //indexOf fala qual a posição que o dadoe stá
+      const index = this.dados.indexOf(nome);   //indexOf fala qual a posição que o dado stá
       this.dados.splice(index, 1);              //index, 1 = é a posição que o dado está
     }
   }
